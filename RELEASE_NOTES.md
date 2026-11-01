@@ -24,7 +24,7 @@ ambient, lo-fi electronic and retro synthesizer music.
 * Three tape types with saturation, bias shaping, head bump and tape-age high-frequency loss.
 * Wow, flutter, motor bog (pitch sag under loud material), pinch-roller bumps, azimuth wander.
 * 1–4 dub generations with click-free switching; dropouts, hiss, 50 / 60 Hz hum.
-* Dark spring reverb, routable before or after the tape.
+* Dub spring tank reverb, routable before or after the tape.
 * Dry / Wet with a latency-matched dry path; 21 automatable parameters; pixel-art editor.
 
 ## Installation

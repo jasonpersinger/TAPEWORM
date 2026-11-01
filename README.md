@@ -6,7 +6,7 @@ A cassette-tape degradation and lo-fi effect for Linux, in **CLAP** and **VST3**
 
 TAPEWORM imitates cheap, worn cassette gear rather than pristine studio tape: saturation, head bump,
 wow and flutter, a motor that bogs down under heavy material, pinch-roller bumps, azimuth wander,
-multi-generation dubbing, dropouts, hiss, mains hum and a dark spring reverb. It was made for dungeon
+multi-generation dubbing, dropouts, hiss, mains hum and a dub spring tank. It was made for dungeon
 synth, dark ambient, lo-fi electronic and retro synthesizer music, and works on anything that should
 sound like it lived on a tape for a few decades.
 
