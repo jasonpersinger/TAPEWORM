@@ -1,0 +1,25 @@
+# Build and test every push / pull request in the pinned Debian 12 release environment.
+# Uses only GitHub-hosted runners (free for public repositories); publishes nothing.
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: debian:bookworm@sha256:a0039cc6bb3eb2215aabcd3437cce8808a3858d86bf483eee2ee14fe4d2551c2
+    steps:
+      - name: Install git first (so checkout produces a real repository)
+        run: apt-get update && apt-get install -y --no-install-recommends git ca-certificates
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Provision (same script as the release build)
+        run: sh packaging/provision-debian12.sh
+      - name: Test and build in the release configuration, check glibc ceiling
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          packaging/make-release.sh --runner native --out "$RUNNER_TEMP/dist"

@@ -1,0 +1,41 @@
+# Manually triggered release BUILD. It produces the release archives as workflow artifacts for the
+# maintainer to download, verify and test. It does NOT create a GitHub release, tag, or upload anything
+# public: publishing is a separate, manual step (see the release checklist).
+name: release-build
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Tag or commit to build (e.g. v0.1.0)"
+        required: true
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container:
+      image: debian:bookworm@sha256:a0039cc6bb3eb2215aabcd3437cce8808a3858d86bf483eee2ee14fe4d2551c2
+    steps:
+      - name: Install git first (so checkout produces a real repository)
+        run: apt-get update && apt-get install -y --no-install-recommends git ca-certificates
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+      - name: Provision (same script as the local release build)
+        run: sh packaging/provision-debian12.sh
+      - name: Build, check and package
+        env:
+          REF: ${{ inputs.ref }}   # passed via env, never interpolated into the script
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          packaging/make-release.sh --runner native --rev "$REF" --out "$RUNNER_TEMP/dist"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
+        with:
+          name: tapeworm-release-${{ inputs.ref }}
+          path: |
+            ${{ runner.temp }}/dist/*.tar.gz
+            ${{ runner.temp }}/dist/SHA256SUMS
+            ${{ runner.temp }}/dist/BUILD_MANIFEST.txt
+            ${{ runner.temp }}/dist/RELEASE_NOTES.md
+          retention-days: 14
