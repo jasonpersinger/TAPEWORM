@@ -86,9 +86,9 @@ BR=/be/build-release.sh; [ "$RUNNER" = docker ] && BR=/usr/local/bin/build-relea
 
 # ------------------------------------------------------------ 3-4. fetch (online), test + build (offline)
 log "fetching locked dependencies"
-run "" bash $BR fetch > "$OUT/logs/fetch.log" 2>&1
+run "" bash $BR fetch > "$OUT/logs/fetch.log" 2>&1 || { tail -40 "$OUT/logs/fetch.log"; exit 1; }
 log "testing and building offline"
-run offline bash $BR build > "$OUT/logs/build.log" 2>&1
+run offline bash $BR build > "$OUT/logs/build.log" 2>&1 || { tail -40 "$OUT/logs/build.log"; exit 1; }
 grep -E '^test result' "$WORK/build/out/test.log" | tee -a "$OUT/logs/make-release.log"
 CLAP=$WORK/build/out/bundled/tapeworm.clap
 VSO=$WORK/build/out/bundled/tapeworm.vst3/Contents/x86_64-linux/tapeworm.so

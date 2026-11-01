@@ -11,7 +11,8 @@
 set -euo pipefail
 export CARGO_HOME=/build/cargo-home
 export CARGO_TARGET_DIR=/build/target
-export PATH="/root/.cargo/bin:$PATH"   # rustup proxies (RUSTUP_HOME=/root/.rustup)
+export RUSTUP_HOME=/root/.rustup        # where provision-debian12.sh installed the toolchain
+export PATH="/root/.cargo/bin:$PATH"   # rustup proxies
 cd /build/src
 
 fetch() {

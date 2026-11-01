@@ -4,6 +4,8 @@
 set -eu
 
 RUST_VERSION=1.99.1                       # the compiler that built the certified 753cb63 RC
+# Fixed locations, independent of $HOME (GitHub container jobs set HOME=/github/home).
+export RUSTUP_HOME=/root/.rustup CARGO_HOME=/root/.cargo
 RUSTUP_VERSION=1.29.2
 RUSTUP_INIT_SHA256=5be191e8c70a5007074254cb74d78dbfdd25cd5a61c27de7b8e5410122ec24f4
 
@@ -25,8 +27,8 @@ rm /tmp/rustup-init
 {
   echo "image: $(cat /etc/debian_version 2>/dev/null) ($(. /etc/os-release; echo "$PRETTY_NAME"))"
   ldd --version | head -1
-  "$HOME/.cargo/bin/rustc" -vV
-  "$HOME/.cargo/bin/cargo" -V
+  /root/.cargo/bin/rustc -vV
+  /root/.cargo/bin/cargo -V
   gcc --version | head -1
   ld --version | head -1
   echo "--- dpkg"
