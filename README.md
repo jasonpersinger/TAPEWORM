@@ -2,6 +2,8 @@
 
 A cassette-tape degradation and lo-fi effect for Linux, in **CLAP** and **VST3** formats.
 
+![The TAPEWORM editor: a pixel-art cassette deck with tape, motor, wear and spring-reverb controls](docs/tapeworm-editor.png)
+
 TAPEWORM imitates cheap, worn cassette gear rather than pristine studio tape: saturation, head bump,
 wow and flutter, a motor that bogs down under heavy material, pinch-roller bumps, azimuth wander,
 multi-generation dubbing, dropouts, hiss, mains hum and a dark spring reverb. It was made for dungeon
